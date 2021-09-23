@@ -1,7 +1,7 @@
 import React from "react";
 
-import TableHeader from "./TableHeader";
-import TableRow from "./TableRow";
+import TableHeader from "components/Tasks/Table/TableHeader";
+import TableRow from "components/Tasks/Table/TableRow";
 
 const Table = ({ data }) => {
   return (
@@ -19,3 +19,5 @@ const Table = ({ data }) => {
     </div>
   );
 };
+
+export default Table;
