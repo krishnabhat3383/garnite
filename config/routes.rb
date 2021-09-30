@@ -2,7 +2,9 @@
 
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :tasks, only: :index, param: :slug
+  # %i[] is for an array of symbols separated by space, i.e. %i[lawl lol] = [:lawl, :lol]
+  # for same use but for just strings, then use: %w[]
+  resources :tasks, only: %i[index create], param: :slug
   root "home#index"
   get "*path", to: "home#index", via: :all
 end

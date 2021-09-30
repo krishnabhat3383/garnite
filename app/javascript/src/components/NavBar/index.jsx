@@ -12,7 +12,7 @@ const NavBar = () => {
               <NavItem
                 name="Create"
                 iconClass="ri-add-fill"
-                path="/task/create"
+                path="/tasks/create"
               />
             </div>
           </div>
