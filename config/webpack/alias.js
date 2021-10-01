@@ -3,7 +3,9 @@ module.exports = {
     alias: {
       apis: "src/apis",
       common: "src/common",
-      components: "src/components"
+      components: "src/components",
+      constants: "src/constants",
+      helpers: "src/helpers"
     }
   }
 };
