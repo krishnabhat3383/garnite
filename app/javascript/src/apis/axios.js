@@ -1,9 +1,8 @@
-import { handleRemote } from "@rails/ujs";
 import axios from "axios";
 import Toastr from "components/Common/Toastr";
 import { setToLocalStorage, getFromLocalStorage } from "helpers/storage.js";
 
-const DEFAULT_ERROR_NOTIFICATION = "Something went wrong!!";
+const DEFAULT_ERROR_NOTIFICATION = "Something went wrong!";
 
 axios.defaults.baseURL = "/";
 
@@ -15,12 +14,11 @@ const setAuthHeaders = (setLoading = () => null) => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content")
   };
-  const token = localStorage.getItem("authToken");
-  const email = localStorage.getItem("authEmail");
-
+  const token = getFromLocalStorage("authToken");
+  const email = getFromLocalStorage("authEmail");
   if (token && email) {
-    axios.defaults.headers["X-AUTH-TOKEN"] = token;
-    axios.defaults.headers["X-AUTH-EMAIL"] = email;
+    axios.defaults.headers["X-Auth-Email"] = email;
+    axios.defaults.headers["X-Auth-Token"] = token;
   }
   setLoading(false);
 };
@@ -40,9 +38,9 @@ const handleErrorResponse = axiosErrorObject => {
     setToLocalStorage({ authToken: null, email: null, userId: null });
   }
   Toastr.error(
-    axiosErrorObject.response?.data.error || DEFAULT_ERROR_NOTIFICATION
+    axiosErrorObject.response?.data?.error || DEFAULT_ERROR_NOTIFICATION
   );
-  if (axiosErrorObject.response.status === 423) {
+  if (axiosErrorObject.response?.status === 423) {
     window.location.href = "/";
   }
   return Promise.reject(axiosErrorObject);

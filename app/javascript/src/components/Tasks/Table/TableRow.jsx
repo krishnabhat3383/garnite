@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TableRow = ({ data }) => {
+const TableRow = ({ data, showTask }) => {
   return (
     <tbody className="bg-white divide-y divide-gray-200">
       {data.map(rowData => (
@@ -18,6 +18,14 @@ const TableRow = ({ data }) => {
           >
             {rowData.user_id}
           </td>
+          <td>
+            <a
+              className="text-bb-purple"
+              onClick={() => showTask(rowData.slug)}
+            >
+              Show
+            </a>
+          </td>
         </tr>
       ))}
     </tbody>
@@ -25,7 +33,8 @@ const TableRow = ({ data }) => {
 };
 
 TableRow.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  showTask: PropTypes.func
 };
 
 export default TableRow;

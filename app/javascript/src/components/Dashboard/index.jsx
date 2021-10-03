@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { isNil, isEmpty, either } from "ramda";
 
 import Container from "components/Container";
 import Table from "components/Tasks/Table";
-import taskApi from "apis/tasks";
+import tasksApi from "apis/tasks";
 import PageLoader from "components/PageLoader";
 
 const Dashboard = ({ history }) => {
@@ -12,13 +12,17 @@ const Dashboard = ({ history }) => {
 
   const fetchTasks = async () => {
     try {
-      const response = await taskApi.list();
+      const response = await tasksApi.list();
       setTasks(response.data.tasks);
       setLoading(false);
     } catch (error) {
-      // logger.error(error);
+      logger.error(error);
       setLoading(false);
     }
+  };
+
+  const showTask = slug => {
+    history.push(`/tasks/${slug}/show`);
   };
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const Dashboard = ({ history }) => {
     return (
       <Container>
         <h1 className="text-xl leading-5 text-center">
-          You have no Tasks Assigned
+          You have no tasks assigned 😔
         </h1>
       </Container>
     );
@@ -45,7 +49,7 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container>
-      <Table data={tasks} />
+      <Table data={tasks} showTask={showTask} />
     </Container>
   );
 };

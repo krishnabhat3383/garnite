@@ -1,6 +1,6 @@
 import React from "react";
+import { toast } from "react-toastify";
 
-import { toast, Slide } from "react-toastify";
 import { TOASTR_OPTIONS } from "constants";
 
 const ToastrComponent = ({ message }) => {
