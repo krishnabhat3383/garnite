@@ -58,7 +58,7 @@ const EditTask = ({ history }) => {
         setTitle={setTitle}
         setUserId={setUserId}
         loading={loading}
-        setLoading={setLoading}
+        handleSubmit={handleSubmit}
       />
     </Container>
   );
