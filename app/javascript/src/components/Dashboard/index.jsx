@@ -5,6 +5,7 @@ import Container from "components/Container";
 import Table from "components/Tasks/Table";
 import tasksApi from "apis/tasks";
 import PageLoader from "components/PageLoader";
+import taskApi from "../../apis/tasks";
 
 const Dashboard = ({ history }) => {
   const [tasks, setTasks] = useState([]);
@@ -18,6 +19,15 @@ const Dashboard = ({ history }) => {
     } catch (error) {
       logger.error(error);
       setLoading(false);
+    }
+  };
+
+  const destroyTask = async slug => {
+    try {
+      await taskApi.destroy(slug);
+      await fetchTasks();
+    } catch (error) {
+      logger.error(error);
     }
   };
 
@@ -49,7 +59,7 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container>
-      <Table data={tasks} showTask={showTask} />
+      <Table data={tasks} destroyTask={destroyTask} showTask={showTask} />
     </Container>
   );
 };
