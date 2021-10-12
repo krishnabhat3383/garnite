@@ -5,7 +5,7 @@ import Container from "components/Container";
 import Table from "components/Tasks/Table";
 import tasksApi from "apis/tasks";
 import PageLoader from "components/PageLoader";
-import taskApi from "../../apis/tasks";
+import taskApi from "apis/tasks";
 
 const Dashboard = ({ history }) => {
   const [tasks, setTasks] = useState([]);

@@ -12,12 +12,18 @@ const TableRow = ({ data, showTask, destroyTask }) => {
           >
             {rowData.title}
           </td>
-          <td
+          {/* <td
+            className="px-6 py-4 text-sm font-medium
+            leading-5 text-gray-900 whitespace-no-wrap"
+          >
+            {rowData.assigned_user.name}
+          </td> */}
+          {/* <td
             className="px-6 py-4 text-sm font-medium
             leading-5 text-bb-gray whitespace-no-wrap"
           >
             {rowData.user_id}
-          </td>
+          </td> */}
           <td>
             <a
               className="text-bb-purple"

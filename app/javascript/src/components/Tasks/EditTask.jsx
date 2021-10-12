@@ -5,10 +5,13 @@ import Container from "components/Container";
 import TaskForm from "components/Form/TaskForm";
 import taskApi from "apis/tasks";
 import PageLoader from "components/PageLoader";
+import usersApi from "apis/users";
 
 const EditTask = ({ history }) => {
   const [title, setTitle] = useState("");
   const [userId, setUserId] = useState("");
+  const [assignedUser, setAssignedUser] = useState("");
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const { slug } = useParams();
@@ -16,7 +19,10 @@ const EditTask = ({ history }) => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      await taskApi.update({ slug, payload: { task: { title } } });
+      await taskApi.update({
+        slug,
+        payload: { task: { title, assigned_user_id: userId } }
+      });
       setLoading(false);
       history.push("/dashboard");
     } catch (error) {
@@ -29,7 +35,8 @@ const EditTask = ({ history }) => {
     try {
       const response = await taskApi.show(slug);
       setTitle(response.data.task.title);
-      setUserId(response.data.task.user_id);
+      setAssignedUser(response.data.assigned_user);
+      setUserId(response.data.assigned_user.id);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -37,8 +44,24 @@ const EditTask = ({ history }) => {
     }
   };
 
+  const fetchUserDetails = async () => {
+    try {
+      const response = await usersApi.list();
+      setUsers(response.data.users);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
+  const loadData = async () => {
+    await fetchUserDetails();
+    await fetchTaskDetails();
+  };
+
   useEffect(() => {
-    fetchTaskDetails();
+    loadData();
   }, []);
 
   if (pageLoading) {
@@ -54,7 +77,8 @@ const EditTask = ({ history }) => {
       <TaskForm
         type="update"
         title={title}
-        userId={userId}
+        users={users}
+        assignedUser={assignedUser}
         setTitle={setTitle}
         setUserId={setUserId}
         loading={loading}

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # %i[] is for an array of symbols separated by space, i.e. %i[lawl lol] = [:lawl, :lol]
   # for same use but for just strings, then use: %w[]
   resources :tasks, except: %i[new, edit], param: :slug
+  resources :users, only: :index
   root "home#index"
   get "*path", to: "home#index", via: :all
 end
