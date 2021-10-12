@@ -34,9 +34,10 @@ const EditTask = ({ history }) => {
   const fetchTaskDetails = async () => {
     try {
       const response = await taskApi.show(slug);
-      setTitle(response.data.task.title);
-      setAssignedUser(response.data.assigned_user);
-      setUserId(response.data.assigned_user.id);
+      const { task } = response.data;
+      setTitle(task.title);
+      setAssignedUser(task.assigned_user);
+      setUserId(task.assigned_user.id);
     } catch (error) {
       logger.error(error);
     } finally {

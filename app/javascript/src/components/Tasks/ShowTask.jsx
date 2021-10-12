@@ -20,8 +20,9 @@ const ShowTask = () => {
   const fetchTaskDetails = async () => {
     try {
       const response = await tasksApi.show(slug);
-      setTaskDetails(response.data.task);
-      setAssignedUser(response.data.assigned_user);
+      const { task } = response.data;
+      setTaskDetails(task);
+      setAssignedUser(task.assigned_user);
     } catch (error) {
       logger.error(error);
     } finally {
