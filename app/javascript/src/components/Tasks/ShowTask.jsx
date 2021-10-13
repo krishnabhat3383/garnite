@@ -1,60 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React from "react";
+import PropTypes from "prop-types";
 
-import Container from "components/Container";
-import PageLoader from "components/PageLoader";
-import tasksApi from "apis/tasks";
-
-const ShowTask = () => {
-  const { slug } = useParams();
-  const [taskDetails, setTaskDetails] = useState([]);
-  const [assignedUser, setAssignedUser] = useState("");
-  const [pageLoading, setPageLoading] = useState(true);
-
-  let history = useHistory();
-
-  const updateTask = () => {
-    history.push(`/tasks/${taskDetails.slug}/edit`);
-  };
-
-  const fetchTaskDetails = async () => {
-    try {
-      const response = await tasksApi.show(slug);
-      const { task } = response.data;
-      setTaskDetails(task);
-      setAssignedUser(task.assigned_user);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setPageLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTaskDetails();
-  }, []);
-
-  if (pageLoading) {
-    return <PageLoader />;
-  }
-
+const TableRow = ({ data, destroyTask, showTask }) => {
   return (
-    <Container>
-      <h1 className="pb-3 pl-3 mt-3 mb-3 text-lg leading-5 text-bb-gray border-b border-bb-gray">
-        <span>Task Title : </span> {taskDetails?.title}
-      </h1>
-      <div className="bg-bb-env px-2 mt-2 mb-4 rounded">
-        <i
-          className="text-2xl text-center transition cursor-pointer duration-300ease-in-out ri-edit-line hover:text-bb-yellow"
-          onClick={updateTask}
-        ></i>
-      </div>
-      <h2 className="pb-3 pl-3 mt-3 mb-3 text-lg leading-5 text-gray-800 border-b border-gray-500">
-        <span className="text-gray-600">Assigned To : </span>
-        {assignedUser?.name}
-      </h2>
-    </Container>
+    <tbody className="bg-white divide-y divide-gray-200">
+      {data.map(rowData => (
+        <tr key={rowData.id}>
+          <td
+            className="block w-64 px-6 py-4 text-sm font-medium
+            leading-8 text-bb-purple capitalize truncate"
+          >
+            {rowData.title}
+          </td>
+          <td
+            className="px-6 py-4 text-sm font-medium
+            leading-5 text-gray-900 whitespace-no-wrap"
+          >
+            {rowData.assigned_user.name}
+          </td>
+          <td className="px-6 py-4 text-sm font-medium leading-5 text-right cursor-pointer">
+            <a
+              className="text-bb-purple"
+              onClick={() => showTask(rowData.slug)}
+            >
+              Show
+            </a>
+          </td>
+          <td
+            className="px-6 py-4 text-sm font-medium
+            leading-5 text-right cursor-pointer"
+          >
+            <a
+              className="text-red-500
+              hover:text-red-700"
+              onClick={() => destroyTask(rowData.slug)}
+            >
+              Delete
+            </a>
+          </td>
+        </tr>
+      ))}
+    </tbody>
   );
 };
 
-export default ShowTask;
+TableRow.propTypes = {
+  data: PropTypes.array.isRequired,
+  destroyTask: PropTypes.func,
+  showTask: PropTypes.func
+};
+
+export default TableRow;
