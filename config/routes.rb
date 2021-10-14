@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   # for same use but for just strings, then use: %w[]
   defaults format: :json do
     resources :tasks, except: %i[new, edit], param: :slug
-    resources :users, only: :index
+    resources :users, only: %i[index create]
   end
   root "home#index"
+
   get "*path", to: "home#index", via: :all
 end
