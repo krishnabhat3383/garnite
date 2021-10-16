@@ -58,5 +58,7 @@ end
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # react frontend
 gem "react-rails"
-
+# authentication gem
 gem "bcrypt", "~> 3.1.13"
+# test coverage gem
+gem "simplecov", require: false, group: :test
