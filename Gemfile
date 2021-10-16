@@ -34,6 +34,10 @@ group :development, :test do
 
   gem "rubocop"
   gem "rubocop-rails"
+  # factory bot
+  gem "factory_bot_rails"
+  # faker for fake data gen
+  gem "faker"
 end
 
 group :development do
