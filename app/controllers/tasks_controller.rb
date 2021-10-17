@@ -13,6 +13,7 @@ class TasksController < ApplicationController
 
   def create
     task = Task.new(task_params.merge(task_owner_id: @current_user.id))
+    authorize task
     if task.save
       render status: :ok, json: { notice: t("successfully_created", entity: "Task") }
     else
@@ -23,6 +24,7 @@ class TasksController < ApplicationController
 
   def show
     authorize @task
+    @comments = @task.comments.order("created_at DESC")
   end
 
   def update
@@ -54,7 +56,7 @@ class TasksController < ApplicationController
     def load_task
       @task = Task.find_by(slug: params[:slug])
       unless @task
-        render status: :not_found, json: { error: t("task.not_found") }
+        render status: :not_found, json: { error: t("not_found", entity: "Task") }
       end
     end
 end

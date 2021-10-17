@@ -39,7 +39,7 @@ en:
   successfully_created: "%{entity} was created successfully!"
   successfully_updated: "Successfully updated %{entity}!"
   successfully_deleted: "Successfully deleted %{entity}!"
+  not_found: "%{entity} not found!"
   task:
-    not_found: "Task not found!"
     slug:
       immutable: "is immutable!"
