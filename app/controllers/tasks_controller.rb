@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
   before_action :authenticate_user_using_x_auth_token
   before_action :load_task, only: %i[show update destroy]
 
   def index
-    tasks = Task.all
+    tasks = policy_scope(Task)
     render status: :ok, json: { tasks: tasks }
   end
 
@@ -20,10 +22,11 @@ class TasksController < ApplicationController
   end
 
   def show
-    render
+    authorize @task
   end
 
   def update
+    authorize @task
     if @task.update(task_params)
       render status: :ok, json: { notice: t("successfully_updated", entity: "task") }
     else
@@ -33,6 +36,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    authorize @task
     if @task.destroy
       render status: :ok, json: { notice: t("successfully_deleted", entity: "task") }
     else
@@ -41,16 +45,16 @@ class TasksController < ApplicationController
     end
   end
 
-  def load_task
-    @task = Task.find_by(slug: params[:slug])
-    unless @task
-      render status: :not_found, json: { error: t("task.not_found") }
-    end
-  end
-
   private
 
     def task_params
       params.require(:task).permit(:title, :assigned_user_id)
+    end
+
+    def load_task
+      @task = Task.find_by(slug: params[:slug])
+      unless @task
+        render status: :not_found, json: { error: t("task.not_found") }
+      end
     end
 end
