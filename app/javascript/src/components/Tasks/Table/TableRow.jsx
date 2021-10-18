@@ -7,7 +7,8 @@ const TableRow = ({
   data,
   destroyTask,
   showTask,
-  handleProgressToggle
+  handleProgressToggle,
+  starTask
 }) => {
   const isCompleted = type === "completed";
   const toggledProgress = isCompleted ? "pending" : "completed";
@@ -43,12 +44,29 @@ const TableRow = ({
             {rowData.title}
           </td>
           {!isCompleted && (
-            <td
-              className="px-6 py-4 text-sm font-medium leading-5
+            <>
+              <td
+                className="px-6 py-4 text-sm font-medium leading-5
              text-bb-gray-600 whitespace-no-wrap"
-            >
-              {rowData?.assigned_user?.name}
-            </td>
+              >
+                {rowData?.assigned_user?.name}
+              </td>
+              <td className="pl-6 py-4 text-center cursor-pointer">
+                <i
+                  className={classNames(
+                    "transition duration-300 ease-in-out text-2xl hover:text-bb-yellow p-1",
+                    {
+                      "text-bb-border ri-star-line":
+                        rowData.status !== "starred"
+                    },
+                    {
+                      "text-white text-bb-yellow ri-star-fill":
+                        rowData.status === "starred"
+                    }
+                  )}
+                ></i>
+              </td>
+            </>
           )}
           {isCompleted && (
             <>
@@ -74,7 +92,8 @@ TableRow.propTypes = {
   type: PropTypes.string,
   destroyTask: PropTypes.func,
   showTask: PropTypes.func,
-  handleProgressToggle: PropTypes.func
+  handleProgressToggle: PropTypes.func,
+  starTask: PropTypes.func
 };
 
 export default TableRow;
