@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i.freeze
+
   has_many :comments, dependent: :destroy
   has_many :created_tasks, foreign_key: :task_owner_id, class_name: "Task"
-  VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i.freeze
   has_many :assigned_tasks, foreign_key: :assigned_user_id, class_name: "Task"
+
   has_secure_password
   has_secure_token :authentication_token
 
