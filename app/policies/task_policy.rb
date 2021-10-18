@@ -25,6 +25,10 @@ class TaskPolicy
     true
   end
 
+  def update?
+    show?
+  end
+
   def destroy?
     task.task_owner_id == user.id
   end
