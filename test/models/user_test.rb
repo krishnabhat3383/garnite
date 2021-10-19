@@ -82,4 +82,13 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not_same @user.authentication_token, second_user.authentication_token
   end
+
+  def test_tasks_created_by_user_are_deleted_when_user_is_deleted
+    task_owner = build(:user)
+    create(:task, assigned_user: @user, task_owner: task_owner)
+
+    assert_difference "Task.count", -1 do
+      task_owner.destroy
+    end
+  end
 end

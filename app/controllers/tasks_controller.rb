@@ -9,7 +9,7 @@ class TasksController < ApplicationController
 
   def index
     tasks = policy_scope(Task)
-    @pending_tasks = tasks.of_status(:pending).as_json(include: {assigned_user: {only: {%i[name id]}}})
+    @pending_tasks = tasks.of_status(:pending).as_json(include: { assigned_user: { only: %i[name id] } })
     @completed_tasks = tasks.of_status(:completed)
   end
 
