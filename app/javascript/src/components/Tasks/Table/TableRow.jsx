@@ -64,6 +64,7 @@ const TableRow = ({
                         rowData.status === "starred"
                     }
                   )}
+                  onClick={() => starTask(rowData.slug, rowData.status)}
                 ></i>
               </td>
             </>
