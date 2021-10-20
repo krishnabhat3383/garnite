@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     if task.save
       render status: :ok, json: { notice: t("successfully_created", entity: "Task") }
     else
-      errors = task.errors.full_message.to_sentence
+      errors = task.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { errors: errors }
     end
   end
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
       render status: :ok, json: { notice: t("successfully_deleted", entity: "task") }
     else
       render status: :unprocessable_entity,
-        json: { error: @task.errors.full_message.to_sentence }
+        json: { error: @task.errors.full_messages.to_sentence }
     end
   end
 
