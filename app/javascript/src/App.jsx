@@ -13,6 +13,7 @@ import ShowTask from "components/Tasks/ShowTask";
 import EditTask from "components/Tasks/EditTask";
 import { getFromLocalStorage } from "helpers/storage";
 import Signup from "components/Authentication/Signup";
+import MyPreferences from "components/MyPreferences";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ const App = () => {
         <Route exact path="/tasks/:slug/edit" component={EditTask} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/my/preferences" component={MyPreferences} />
         <PrivateRoute
           path="/"
           redirectRoute="/login"

@@ -16,6 +16,8 @@ module Garnite
       g.test_framework :test_unit, fixtures: false
     end
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.delivery_method = :letter_opener
+    config.action_mailer.perform_deliveries = true
 
     # Configuration for the application, engines, and railties goes here.
     #

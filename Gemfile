@@ -70,3 +70,7 @@ gem "simplecov", require: false, group: :test
 gem "pundit"
 # sidekiq gem for background process sidekick
 gem "sidekiq"
+# sidekiq-cron for periodic jobs
+gem "sidekiq-cron"
+# for opening mails in dev env
+gem "letter_opener", group: :development
