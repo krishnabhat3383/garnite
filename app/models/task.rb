@@ -13,6 +13,12 @@ class Task < ApplicationRecord
 
   before_create :set_slug
 
+  after_create :log_task_details
+
+  def log_task_details
+    TaskLoggerJob.perform_later(self)
+  end
+
   private
 
     def set_slug

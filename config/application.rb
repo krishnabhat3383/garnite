@@ -15,6 +15,7 @@ module Garnite
     config.generators do |g|
       g.test_framework :test_unit, fixtures: false
     end
+    config.active_job.queue_adapter = :sidekiq
 
     # Configuration for the application, engines, and railties goes here.
     #
