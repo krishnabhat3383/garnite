@@ -5,13 +5,11 @@ class PreferencesController < ApplicationController
   before_action :load_preference, only: %i[update]
 
   def show
-    byebug
     preference = Preference.find_by(user_id: params[:id])
     authorize preference
   end
 
   def update
-    byebug
     authorize @preference
     if @preference.update(preference_params)
       render status: :ok, json: {
